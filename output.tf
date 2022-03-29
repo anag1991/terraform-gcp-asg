@@ -1,45 +1,29 @@
-data "terraform_remote_state" "vpcglobal" {
-  backend = "gcs"
-  config = {
-    bucket = "terraform-project-team3"
-    prefix = "terraform/state/vpcglobal"
-  }
-}
-output "vpcglobal" {
-  value = data.terraform_remote_state.vpcglobal.outputs.vpcglobal
+output "instance_name" {
+  value       = google_sql_database_instance.db.name
+  description = "The instance name for the master instance"
 }
 
-resource "google_compute_address" "static" {
-  name = var.asg_config["static_name"]
-}
-# This block of code builds instance template(launch template)
-resource "google_compute_instance_template" "launch_template" {
-  name                    = var.asg_config["instance_template_name"]
-  machine_type            = var.asg_config["machine_type"]
-  can_ip_forward          = false
-  metadata_startup_script = file("userdata.sh") # To install & start a web server on the instances
-  metadata = {
-    ssh-keys = "debian:${file("~/.ssh/id_rsa.pub")}"
-  }
-  disk {
-    source_image = var.asg_config["source_image"]
-  }
-  network_interface {
-    network = data.terraform_remote_state.vpcglobal.outputs.vpcglobal
-     access_config {
-      nat_ip = google_compute_address.static.address
-    }
-  }
+output "instance_ip_address" {
+  value       = google_sql_database_instance.db.ip_address
+  description = "The IPv4 address assigned for the master instance"
 }
 
-resource "google_compute_firewall" "wordpress" {
-  name    = var.asg_config["firewall_name"]
-  network = data.terraform_remote_state.vpcglobal.outputs.vpcglobal
-  allow {
-    protocol = "tcp"
-    ports    = ["80", "443"]
-  }
-  source_tags   = [var.asg_config["network_tags"]]
-  source_ranges = ["0.0.0.0/0"]
+output "private_address" {
+  value       = google_sql_database_instance.db.private_ip_address
+  description = "The private IP address assigned for the master instance"
 }
 
+output "instance_first_ip_address" {
+  value       = google_sql_database_instance.db.first_ip_address
+  description = "The first IPv4 address of the addresses assigned for the master instance."
+}
+
+output "instance_connection_name" {
+  value       = google_sql_database_instance.db.connection_name
+  description = "The connection name of the master instance to be used in connection strings"
+}
+
+output "instance_self_link" {
+  value       = google_sql_database_instance.db.self_link
+  description = "The URI of the master instance"
+}
