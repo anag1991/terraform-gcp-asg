@@ -1,17 +1,4 @@
-// I had to mute below because terraform was complaining "Error: Duplicate data "terraform_remote_state" configuration"
-
-# data "terraform_remote_state" "vpcglobal" {
-#   backend = "gcs"
-#   config = {
-#     bucket = "terraform-project-team3"
-#     prefix = "terraform/state/vpcglobal"
-#   }
-# }
-
-# output "vpcglobal" {
-#   value = data.terraform_remote_state.vpcglobal.outputs.vpcglobal
-# }
-
+# This block of code creates a static IP address
 resource "google_compute_address" "static" {
   name = var.asg_config["static_name"]
 }
@@ -28,7 +15,7 @@ resource "google_compute_instance_template" "launch_template" {
     source_image = var.asg_config["source_image"]
   }
   network_interface {
-    network = data.terraform_remote_state.vpcglobal.outputs.vpcglobal
+    network = data.terraform_remote_state.vpcglobal.outputs.vpc_name
      access_config {
       nat_ip = google_compute_address.static.address
     }
@@ -37,7 +24,7 @@ resource "google_compute_instance_template" "launch_template" {
 
 resource "google_compute_firewall" "wordpress" {
   name    = var.asg_config["firewall_name"]
-  network = data.terraform_remote_state.vpcglobal.outputs.vpcglobal
+  network = data.terraform_remote_state.vpcglobal.outputs.vpc_name
   allow {
     protocol = "tcp"
     ports    = ["80", "443"]

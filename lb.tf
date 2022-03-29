@@ -2,11 +2,11 @@ data "terraform_remote_state" "vpcglobal" {
   backend = "gcs"
   config = {
     bucket = "terraform-project-team3"
-    prefix = "terraform/state/vpcglobal"
+    prefix = "terraform/state/globalvpc"
   }
 }
 output "vpcglobal" {
-  value = data.terraform_remote_state.vpcglobal.outputs.vpcglobal
+  value = data.terraform_remote_state.vpcglobal.outputs.vpc_name
 }
 
 // Forwarding rule for External Network Load Balancing using Backend Services
@@ -34,14 +34,3 @@ resource "google_compute_region_health_check" "hc" {
   }
 }
 
-# resource "google_compute_network" "default" {
-#   name                    = "website-net"
-#   auto_create_subnetworks = false
-# }
-
-# resource "google_compute_subnetwork" "default" {
-#   name          = "website-net"
-#   ip_cidr_range = var.lb_config["ip_cidr_range"]
-#   region        = var.lb_config["region"]
-#   network       = google_compute_network.default.name
-# }
