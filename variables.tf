@@ -17,7 +17,6 @@ variable "asg_config" {
     base_instance_name          = "team3-base-instance"
     firewall_name               = "wordpress"
     network_tags                = "wordpress"
-
     static_name                 = "ipv4-address"
   }
 }

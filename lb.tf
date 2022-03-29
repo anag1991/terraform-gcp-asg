@@ -42,14 +42,29 @@ resource "google_compute_health_check" "hc" {
   }
 }
 
-resource "google_compute_network" "default" {
-  name                    = "website-net"
-  auto_create_subnetworks = false
+// Forwarding rule for External Network Load Balancing using Backend Services
+resource "google_compute_forwarding_rule" "default" {
+  provider              = google-beta
+  name                  = "website-forwarding-rule"
+  region                = "us-central1"
+  port_range            = 80
+  backend_service       = google_compute_region_backend_service.backend.id
 }
+resource "google_compute_region_backend_service" "backend" {
+  provider              = google-beta
+  name                  = "website-backend"
+  region                = "us-central1"
+  load_balancing_scheme = "EXTERNAL"
+  health_checks         = [google_compute_region_health_check.hc.id]
+}
+resource "google_compute_region_health_check" "hc" {
+  provider           = google-beta
+  name               = "check-website-backend"
+  check_interval_sec = 1
+  timeout_sec        = 1
+  region             = "us-central1"
 
-resource "google_compute_subnetwork" "default" {
-  name          = "website-net"
-  ip_cidr_range = var.lb_config["ip_cidr_range"]
-  region        = var.lb_config["region"]
-  network       = google_compute_network.default.name
+  tcp_health_check {
+    port = "80"
+  }
 }
