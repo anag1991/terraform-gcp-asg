@@ -13,7 +13,7 @@ output "vpcglobal" {
 resource "google_compute_forwarding_rule" "http" {
   name                  = var.lb_config["loadbalancer"]
   region                = var.lb_config["region"]
-  port_range            = 80
+  port_range            = var.lb_config["port_range"]
   backend_service       = google_compute_region_backend_service.backend.id
 }
 resource "google_compute_region_backend_service" "backend" {
