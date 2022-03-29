@@ -33,5 +33,3 @@ resource "google_compute_instance_group_manager" "group_manager" {
   target_pools       = [google_compute_target_pool.target_pool.self_link]
   base_instance_name = var.asg_config["base_instance_name"]
 }
-
-
