@@ -1,13 +1,16 @@
-data "terraform_remote_state" "vpcglobal" {
-  backend = "gcs"
-  config = {
-    bucket = "terraform-project-team3"
-    prefix = "terraform/state/vpcglobal"
-  }
-}
-output "vpcglobal" {
-  value = data.terraform_remote_state.vpcglobal.outputs.vpcglobal
-}
+// I had to mute below because terraform was complaining "Error: Duplicate data "terraform_remote_state" configuration"
+
+# data "terraform_remote_state" "vpcglobal" {
+#   backend = "gcs"
+#   config = {
+#     bucket = "terraform-project-team3"
+#     prefix = "terraform/state/vpcglobal"
+#   }
+# }
+
+# output "vpcglobal" {
+#   value = data.terraform_remote_state.vpcglobal.outputs.vpcglobal
+# }
 
 resource "google_compute_address" "static" {
   name = var.asg_config["static_name"]
