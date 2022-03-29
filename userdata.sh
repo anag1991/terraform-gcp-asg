@@ -12,7 +12,7 @@ mv /var/www/html/wordpress/* /var/www/html/
 getenforce
 sed 's/SELINUX=permissive/SELINUX=enforcing/g' /etc/sysconfig/selinux -i
 setenforce 0
-chown -R apache:apache /var/www/html/
+sudo chown -R apache:apache /var/www/html/
 # Start web server
 sudo systemctl restart httpd
 sudo systemctl enable httpd
