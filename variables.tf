@@ -13,7 +13,7 @@ variable "asg_config" {
     instance_group_manager_name = "team3-igm"
     instance_template_name      = "team3-instance-template"
     machine_type                = "e2-medium"
-    source_image                = "CentOS-cloud/CentOS-7"
+    source_image                = "centos-cloud/centos-7"
     base_instance_name          = "team3-base-instance"
     firewall_name               = "wordpress"
     network_tags                = "wordpress"
