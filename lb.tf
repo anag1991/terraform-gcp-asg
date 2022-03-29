@@ -9,37 +9,47 @@ output "vpcglobal" {
   value = data.terraform_remote_state.vpcglobal.outputs.vpcglobal
 }
 
-resource "google_compute_address" "static" {
-  name = var.asg_config["static_name"]
+resource "google_compute_forwarding_rule" "lb" {
+  name                  = var.lb_config["loadbalancer"]
+  region                = var.lb_config["region"]
+  load_balancing_scheme = "INTERNAL"
+  backend_service       = google_compute_region_backend_service.backend.id
+  all_ports             = true
+  allow_global_access   = true
+
+  ## switch below before merge
+
+  network = google_compute_network.default.name
+  # network             = data.terraform_remote_state.vpc.outputs.vpc_name
+
+  subnetwork = google_compute_subnetwork.default.name
+  # network             = data.terraform_remote_state.vpc.outputs.NEED_THIS_FROM_TEAM_VPC
 }
-# This block of code builds instance template(launch template)
-resource "google_compute_instance_template" "launch_template" {
-  name                    = var.asg_config["instance_template_name"]
-  machine_type            = var.asg_config["machine_type"]
-  can_ip_forward          = false
-  metadata_startup_script = file("userdata.sh") # To install & start a web server on the instances
-  metadata = {
-    ssh-keys = "debian:${file("~/.ssh/id_rsa.pub")}"
-  }
-  disk {
-    source_image = var.asg_config["source_image"]
-  }
-  network_interface {
-    network = data.terraform_remote_state.vpcglobal.outputs.vpcglobal
-     access_config {
-      nat_ip = google_compute_address.static.address
-    }
+
+
+resource "google_compute_region_backend_service" "backend" {
+  name          = var.lb_config["backend"]
+  region        = var.lb_config["region"]
+  health_checks = [google_compute_health_check.hc.id]
+}
+
+resource "google_compute_health_check" "hc" {
+  name               = var.lb_config["health_check"]
+  check_interval_sec = 1
+  timeout_sec        = 1
+  tcp_health_check {
+    port = "80"
   }
 }
 
-resource "google_compute_firewall" "wordpress" {
-  name    = var.asg_config["firewall_name"]
-  network = data.terraform_remote_state.vpcglobal.outputs.vpcglobal
-  allow {
-    protocol = "tcp"
-    ports    = ["80", "443"]
-  }
-  source_tags   = [var.asg_config["network_tags"]]
-  source_ranges = ["0.0.0.0/0"]
+resource "google_compute_network" "default" {
+  name                    = "website-net"
+  auto_create_subnetworks = false
 }
 
+resource "google_compute_subnetwork" "default" {
+  name          = "website-net"
+  ip_cidr_range = var.lb_config["ip_cidr_range"]
+  region        = var.lb_config["region"]
+  network       = google_compute_network.default.name
+}
