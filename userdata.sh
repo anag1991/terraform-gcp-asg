@@ -1,3 +1,4 @@
+
 # #!/bin/bash
 sudo yum install httpd wget unzip epel-release mysql -y
 sudo yum -y install http://rpms.remirepo.net/enterprise/remi-release-7.rpm

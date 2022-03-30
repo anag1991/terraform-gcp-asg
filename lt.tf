@@ -22,14 +22,16 @@ resource "google_compute_instance_template" "launch_template" {
   }
 }
 
+# This block of code builds firewall for the instances
 resource "google_compute_firewall" "wordpress" {
   name    = var.asg_config["firewall_name"]
   network = data.terraform_remote_state.vpcglobal.outputs.vpc_name
   allow {
     protocol = "tcp"
+
     ports    = ["80", "443", "22"]
+
   }
   source_tags   = [var.asg_config["network_tags"]]
   source_ranges = ["0.0.0.0/0"]
 }
-
