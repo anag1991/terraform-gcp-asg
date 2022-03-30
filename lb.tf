@@ -31,6 +31,6 @@ resource "google_compute_firewall" "lb" {
     protocol = "tcp"
     ports    = var.lb_config["port_range"]
   }
-  source_tags   = [var.asg_config["network_tags"]]
+#   source_tags   = [var.asg_config["network_tags"]]
   source_ranges = ["0.0.0.0/0"]
 }
