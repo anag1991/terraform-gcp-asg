@@ -193,7 +193,7 @@ To do:
 | google_compute_target_pool.target_pool.name |  tp_name | The name of the target pool  |
 | google_compute_target_pool.target_pool.id  | tp_id  |  The Id of the target pool  |
 | google_compute_forwarding_rule.http.name  |   lb_name  |  The name of  the google compute forwarding rule |
-| google_compute_forwarding_rule.http.id  |  lb_id  | Th    | The name of  the google compute forwarding rule |
+| google_compute_forwarding_rule.http.id  |  lb_id  | Th    | The id of  the google compute forwarding rule |
 
 
 
