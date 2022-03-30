@@ -1,3 +1,14 @@
+data "terraform_remote_state" "vpcglobal" {
+  backend = "gcs"
+  config = {
+    bucket = "terraform-project-team3"
+    prefix = "terraform/state/globalvpc"
+  }
+}
+output "vpcglobal" {
+  value = data.terraform_remote_state.vpcglobal.outputs.vpc_name
+}
+
 resource "google_compute_target_pool" "target_pool" {
   region = var.asg_config["region"]
   name   = var.asg_config["target-pool-name"]

@@ -1,14 +1,3 @@
-data "terraform_remote_state" "vpcglobal" {
-  backend = "gcs"
-  config = {
-    bucket = "terraform-project-team3"
-    prefix = "terraform/state/globalvpc"
-  }
-}
-output "vpcglobal" {
-  value = data.terraform_remote_state.vpcglobal.outputs.vpc_name
-}
-
 // Forwarding rule for External Network Load Balancing using Backend Services
 resource "google_compute_forwarding_rule" "http" {
   name                  = var.lb_config["loadbalancer"]
@@ -40,7 +29,7 @@ resource "google_compute_firewall" "lb" {
   network = data.terraform_remote_state.vpcglobal.outputs.vpc_name
   allow {
     protocol = "tcp"
-    ports    = ["80", "443", "22"]
+    ports    = var.lb_config["port_range"]
   }
   source_tags   = [var.asg_config["network_tags"]]
   source_ranges = ["0.0.0.0/0"]
