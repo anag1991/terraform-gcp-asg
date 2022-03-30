@@ -28,9 +28,7 @@ resource "google_compute_firewall" "wordpress" {
   network = data.terraform_remote_state.vpcglobal.outputs.vpc_name
   allow {
     protocol = "tcp"
-
     ports    = ["80", "443", "22"]
-
   }
   source_tags   = [var.asg_config["network_tags"]]
   source_ranges = ["0.0.0.0/0"]

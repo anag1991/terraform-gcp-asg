@@ -1,39 +1,48 @@
-// Forwarding rule for External Network Load Balancing using Backend Services
-resource "google_compute_forwarding_rule" "http" {
-  name                  = var.lb_config["loadbalancer"]
-  region                = var.lb_config["region"]
-  port_range            = 80
-  backend_service       = google_compute_region_backend_service.backend.id
-}
-resource "google_compute_region_backend_service" "backend" {
-  name                  = var.lb_config["backend"]
-  region                = var.lb_config["region"]
-  load_balancing_scheme = "EXTERNAL"
-  health_checks         = [google_compute_region_health_check.hc.id]
+resource "google_compute_global_forwarding_rule" "default" {
+  name       = "global-rule"
+  target     = google_compute_target_http_proxy.default.id
+  port_range = "80"
 }
 
-// Forwarding rule for External Network Load Balancing using Backend Services
-resource "google_compute_forwarding_rule" "http" {
-  name                  = var.lb_config["loadbalancer"]
-  region                = var.lb_config["region"]
-  port_range            = var.lb_config["port_range"]
-  backend_service       = google_compute_region_backend_service.backend.id
-}
-resource "google_compute_region_backend_service" "backend" {
-  name                  = var.lb_config["backend"]
-  region                = var.lb_config["region"]
-  load_balancing_scheme = "EXTERNAL"
-  health_checks         = [google_compute_region_health_check.hc.id]
+resource "google_compute_target_http_proxy" "default" {
+  name        = "target-proxy"
+  description = "a description"
+  url_map     = google_compute_url_map.default.id
 }
 
-resource "google_compute_region_health_check" "hc" {
-  name               = var.lb_config["health_check"]
-  check_interval_sec = 1
-  timeout_sec        = 1
-  region             = var.lb_config["region"]
-  
-  tcp_health_check {
-    port = "80"
+resource "google_compute_url_map" "default" {
+  name            = "url-map-target-proxy"
+  description     = "a description"
+  default_service = google_compute_backend_service.default.id
+
+  host_rule {
+    hosts        = ["mysite.com"]
+    path_matcher = "allpaths"
+  }
+
+  path_matcher {
+    name            = "allpaths"
+    default_service = google_compute_backend_service.default.id
+
+    path_rule {
+      paths   = ["/*"]
+      service = google_compute_backend_service.default.id
+    }
   }
 }
 
+resource "google_compute_backend_service" "default" {
+  name        = "backend"
+  port_name   = "http"
+  protocol    = "HTTP"
+  timeout_sec = 10
+
+  health_checks = [google_compute_http_health_check.default.id]
+}
+
+resource "google_compute_http_health_check" "default" {
+  name               = "check-backend"
+  request_path       = "/"
+  check_interval_sec = 1
+  timeout_sec        = 1
+}
