@@ -23,7 +23,7 @@ resource "google_compute_region_health_check" "hc" {
   }
 }
 
-# This block of code builds firewall for the instances
+# This block of code builds firewall for forwarding rule
 resource "google_compute_firewall" "lb" {
   name    = var.lb_config["lb_firewall"]
   network = data.terraform_remote_state.vpcglobal.outputs.vpc_name
