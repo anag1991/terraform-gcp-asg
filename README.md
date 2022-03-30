@@ -4,9 +4,9 @@
 ## Table of Contents
 * [General Info](#general-information)
 * [Technologies Used](#technologies-used)
-* [Screenshots](#screenshots)
 * [Setup](#setup)
 * [Usage](#usage)
+* [Screenshots](#screenshots)
 * [Project Status](#project-status)
 * [Room for Improvement](#room-for-improvement)
 * [Inputs](#inputs)
@@ -25,10 +25,6 @@ This repo create ASG that scales up upto 3 replicas, based on the LB traffic. Th
 | ----------- | ----------- |
 | Terraform | v1.1.7 |
 | Google Cloud SDK | 378.0.0 |
-
-## Screenshots
-![Instance](Instance.png)
-<!-- We can add more screenshots here. -->
 
 
 ## Setup
@@ -153,6 +149,12 @@ resource "google_compute_firewall" "wordpress" {
 
 ## Project Status
 Project is:  _complete_ 
+
+## Screenshots
+![Instance](Instance.png)
+![Instance](Wordpress.png)
+![Instance](InstanceTemplate.png)
+<!-- We can add more screenshots here. -->
 
 ## Room for Improvement
 Include areas you believe need improvement / could be improved. Also add TODOs for future development.
