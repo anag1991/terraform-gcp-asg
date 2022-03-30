@@ -17,9 +17,7 @@
 
 
 ## General Information
-- This repo was made to create ASG ....
-- 
-<!-- You don't have to answer all the questions - just the ones relevant to your project. -->
+This repo create ASG that scales up upto 3 replicas, based on the LB traffic. There will be at least 1 instance that host wordpress website that has static IP.”
 
 
 ## Providers
