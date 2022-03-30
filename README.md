@@ -203,7 +203,7 @@ Give credit here.
 - Many thanks to Ana Ghirghilijiu, Jiyoung Chun, Tarik Allam, Tarik Sabir Idrissi, Akin Arslan
 
 ## Contact
-Created by @arslakin - feel free to contact me!
+Created by @arslakin!
 
 
 <!-- Optional -->
