@@ -27,7 +27,7 @@ This repo create ASG that scales up upto 3 replicas, based on the LB traffic. Th
 | Google Cloud SDK | 378.0.0 |
 
 ## Screenshots
-![Example screenshot](./img/Instance.png)
+![Instance](Instance.png)
 <!-- We can add more screenshots here. -->
 
 
