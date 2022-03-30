@@ -48,8 +48,7 @@ Proceed to describe how to install / setup one's local environment / get started
 
 
 ## Usage
-- This block of code builds auto scaler with the load balancer.
-
+- The usage of the module could be like this
 ```
 resource "google_compute_autoscaler" "asg" {
   zone = var.asg_config["zone"]
@@ -65,8 +64,7 @@ resource "google_compute_autoscaler" "asg" {
   }
 }
 
-# IGM is a collectoin of instances that you can manage as a single entity
-# This block of code attaches igm to the target pool
+
 
 resource "google_compute_instance_group_manager" "group_manager" {
   zone = var.asg_config["zone"]
@@ -80,7 +78,6 @@ resource "google_compute_instance_group_manager" "group_manager" {
 }
 
 
-# This module builds Global Http Forwarding Rule
 resource "google_compute_global_forwarding_rule" "lb" {
   name       = var.lb_config["loadbalancer"]
   target     = google_compute_target_http_proxy.target_proxy.id
@@ -126,6 +123,41 @@ resource "google_compute_http_health_check" "hc" {
   request_path       = "/"
   check_interval_sec = 1
   timeout_sec        = 1
+}
+
+resource "google_compute_address" "static" {
+  name = var.asg_config["static_name"]
+}
+
+resource "google_compute_instance_template" "launch_template" {
+  name                    = var.asg_config["instance_template_name"]
+  machine_type            = var.asg_config["machine_type"]
+  can_ip_forward          = false
+  metadata_startup_script = file("userdata.sh") # To install & start a web server on the instances
+  metadata = {
+    ssh-keys = "centos7:${file("~/.ssh/id_rsa.pub")}"
+  }
+  disk {
+    source_image = var.asg_config["source_image"]
+  }
+  network_interface {
+    network = data.terraform_remote_state.vpcglobal.outputs.vpc_name
+     access_config {
+      nat_ip = google_compute_address.static.address
+    }
+  }
+}
+
+
+resource "google_compute_firewall" "wordpress" {
+  name    = var.asg_config["firewall_name"]
+  network = data.terraform_remote_state.vpcglobal.outputs.vpc_name
+  allow {
+    protocol = "tcp"
+    ports    = var.asg_config["ports"]
+  }
+#   source_tags   = [var.asg_config["network_tags"]]
+  source_ranges = ["0.0.0.0/0"]
 }
 ```
 
