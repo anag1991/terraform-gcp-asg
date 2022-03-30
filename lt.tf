@@ -9,7 +9,7 @@ resource "google_compute_instance_template" "launch_template" {
   can_ip_forward          = false
   metadata_startup_script = file("userdata.sh") # To install & start a web server on the instances
   metadata = {
-    ssh-keys = "debian:${file("~/.ssh/id_rsa.pub")}"
+    ssh-keys = "centos:${file("~/.ssh/id_rsa.pub")}"
   }
   disk {
     source_image = var.asg_config["source_image"]
