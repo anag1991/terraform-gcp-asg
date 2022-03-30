@@ -34,3 +34,14 @@ resource "google_compute_region_health_check" "hc" {
   }
 }
 
+# This block of code builds firewall for the instances
+resource "google_compute_firewall" "lb" {
+  name    = var.lb_config["lb_firewall"]
+  network = data.terraform_remote_state.vpcglobal.outputs.vpc_name
+  allow {
+    protocol = "tcp"
+    ports    = ["80", "443", "22"]
+  }
+  source_tags   = [var.asg_config["network_tags"]]
+  source_ranges = ["0.0.0.0/0"]
+}
