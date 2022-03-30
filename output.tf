@@ -27,8 +27,8 @@ output "tp_id" {
 }
 
 output "lb_name" {
-  value = google_compute_global_forwarding_rule.lb.name
+  value = google_compute_global_forwarding_rule.http.name
 }
 output "lb_id" {
-  value = google_compute_global_forwarding_rule.lb.id
+  value = google_compute_global_forwarding_rule.http.id
 }
