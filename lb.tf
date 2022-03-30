@@ -1,5 +1,5 @@
 # This module builds Global Http Forwarding Rule
-resource "google_compute_global_forwarding_rule" "lb" {
+resource "google_compute_global_forwarding_rule" "http" {
   name       = var.lb_config["loadbalancer"]
   target     = google_compute_target_http_proxy.target_proxy.id
   port_range = var.lb_config["port_range"]
