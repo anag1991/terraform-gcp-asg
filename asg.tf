@@ -7,9 +7,7 @@ resource "google_compute_target_pool" "target_pool" {
 resource "google_compute_autoscaler" "asg" {
   zone = var.asg_config["zone"]
   name = var.asg_config["autoscaler"]
-
   target = google_compute_instance_group_manager.group_manager.id
-
   autoscaling_policy {
     max_replicas    = var.asg_config["max_replicas"]
     min_replicas    = var.asg_config["min_replicas"]
@@ -33,3 +31,6 @@ resource "google_compute_instance_group_manager" "group_manager" {
   target_pools       = [google_compute_target_pool.target_pool.self_link]
   base_instance_name = var.asg_config["base_instance_name"]
 }
+
+	
+	

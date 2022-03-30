@@ -9,7 +9,7 @@ resource "google_compute_instance_template" "launch_template" {
   can_ip_forward          = false
   metadata_startup_script = file("userdata.sh") # To install & start a web server on the instances
   metadata = {
-    ssh-keys = "debian:${file("~/.ssh/id_rsa.pub")}"
+    ssh-keys = "centos7:${file("~/.ssh/id_rsa.pub")}"
   }
   disk {
     source_image = var.asg_config["source_image"]
@@ -27,7 +27,7 @@ resource "google_compute_firewall" "wordpress" {
   network = data.terraform_remote_state.vpcglobal.outputs.vpc_name
   allow {
     protocol = "tcp"
-    ports    = ["80", "443"]
+    ports    = ["80", "443", "22"]
   }
   source_tags   = [var.asg_config["network_tags"]]
   source_ranges = ["0.0.0.0/0"]
