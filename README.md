@@ -4,7 +4,6 @@
 ## Table of Contents
 * [General Info](#general-information)
 * [Technologies Used](#technologies-used)
-* [Features](#features)
 * [Screenshots](#screenshots)
 * [Setup](#setup)
 * [Usage](#usage)
@@ -26,15 +25,6 @@ This repo create ASG that scales up upto 3 replicas, based on the LB traffic. Th
 | ----------- | ----------- |
 | Terraform | v1.1.7 |
 | Google Cloud SDK | 378.0.0 |
-
-
-
-## Features
-List the ready features here:
-- Awesome feature 1
-- Awesome feature 2
-- Awesome feature 3
-
 
 ## Screenshots
 ![Example screenshot](./img/subnets.png)
