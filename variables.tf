@@ -18,6 +18,7 @@ variable "asg_config" {
     firewall_name               = "wordpress"
     network_tags                = "wordpress"
     static_name                 = "ipv4-address"
+    ports                       = "80, 443, 22"
   }
 }
 
@@ -25,18 +26,13 @@ variable "asg_config" {
 variable "lb_config" {
   type = map(any)
   default = {
-    region           = "us-central1"
-    zone             = "us-central1-c"
-    target-pool-name = "team3-target-pool"
-    loadbalancer     = "team3-loadbalancer"
-
-    port_range       = "80, 443, 22"
-
-    backend          = "website-backend"
-    health_check     = "check-website-backend"
-    ip_cidr_range    = "10.0.0.0/16"
-    lb_firewall      = "lb-firewall"
-    port_range       = "80, 443, 22"    
-
+    loadbalancer     = "team3-global-lb"
+    target_proxy     = "glb-target-proxy"
+    url_map          = "url-map-target-proxy"
+  # hosts            = ["mysite.com"]
+    port_range       = "80"
+    backend          = "backend"
+    port_name        = "http"
+    health_check     = "check-backend"
   }
 }
