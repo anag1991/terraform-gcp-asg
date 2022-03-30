@@ -1,3 +1,4 @@
+# This module builds Global Http Forwarding Rule
 resource "google_compute_global_forwarding_rule" "lb" {
   name       = var.lb_config["loadbalancer"]
   target     = google_compute_target_http_proxy.target_proxy.id
