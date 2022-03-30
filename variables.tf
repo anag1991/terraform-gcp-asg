@@ -29,10 +29,14 @@ variable "lb_config" {
     zone             = "us-central1-c"
     target-pool-name = "team3-target-pool"
     loadbalancer     = "team3-loadbalancer"
+
+    port_range       = "80, 443, 22"
+
     backend          = "website-backend"
     health_check     = "check-website-backend"
     ip_cidr_range    = "10.0.0.0/16"
     lb_firewall      = "lb-firewall"
     port_range       = "80, 443, 22"    
+
   }
 }

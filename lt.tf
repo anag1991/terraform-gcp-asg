@@ -30,6 +30,6 @@ resource "google_compute_firewall" "wordpress" {
     protocol = "tcp"
     ports    = ["80", "443", "22"]
   }
-  source_tags   = [var.asg_config["network_tags"]]
+#   source_tags   = [var.asg_config["network_tags"]]
   source_ranges = ["0.0.0.0/0"]
 }
