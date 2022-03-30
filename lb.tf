@@ -11,7 +11,7 @@ resource "google_compute_target_http_proxy" "target_proxy" {
 
 resource "google_compute_url_map" "url_map" {
   name            = var.lb_config["url_map"]
-  default_service = google_compute_backend_service.default.id
+  default_service = google_compute_backend_service.backend.id
 
   host_rule {
     hosts        = var.asg_config["static_name"] # Host = Static IP
