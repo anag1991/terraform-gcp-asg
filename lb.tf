@@ -15,7 +15,7 @@ resource "google_compute_url_map" "url_map" {
   default_service = google_compute_backend_service.backend.id
 
   host_rule {
-    hosts        = var.asg_config["static_name"] # Host = Static IP
+    hosts        = ["mysite.com"]
     path_matcher = "allpaths"
   }
 

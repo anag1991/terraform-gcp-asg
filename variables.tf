@@ -18,7 +18,6 @@ variable "asg_config" {
     firewall_name               = "wordpress"
     network_tags                = "wordpress"
     static_name                 = "ipv4-address"
-    ports                       = "80, 443, 22"
   }
 }
 
