@@ -148,9 +148,12 @@ resource "google_compute_firewall" "wordpress" {
 Project is:  _complete_ 
 
 ## Screenshots
-![Instance](Instance.png)
-![Instance](Wordpress.png)
-![Instance](InstanceTemplate.png)
+![Instance](https://user-images.githubusercontent.com/77419937/160956944-3ee5a2ad-b1ce-4bf6-8e5e-11127e6658eb.png)
+
+![Wordpress](https://user-images.githubusercontent.com/77419937/160956974-ff4c4042-950e-4b1d-9d6c-1f0664066889.png)
+
+![InstanceTemplate](https://user-images.githubusercontent.com/77419937/160956990-b9cc3679-68d9-485e-b3af-d6785405974e.png)
+
 <!-- We can add more screenshots here. -->
 
 
