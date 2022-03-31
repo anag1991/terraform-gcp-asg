@@ -8,7 +8,6 @@
 * [Usage](#usage)
 * [Screenshots](#screenshots)
 * [Project Status](#project-status)
-* [Room for Improvement](#room-for-improvement)
 * [Inputs](#inputs)
 * [Acknowledgements](#acknowledgements)
 * [Contact](#contact)
@@ -156,16 +155,6 @@ Project is:  _complete_
 ![Instance](InstanceTemplate.png)
 <!-- We can add more screenshots here. -->
 
-## Room for Improvement
-Include areas you believe need improvement / could be improved. Also add TODOs for future development.
-
-Room for improvement:
-- Improvement to be done 1
-- Improvement to be done 2
-
-To do:
-- Feature to be added 1
-- Feature to be added 2
 
 ## Inputs
 
