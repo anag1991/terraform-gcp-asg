@@ -3,8 +3,8 @@
 
 ## Table of Contents
 * [General Info](#general-information)
-* [Technologies Used](#technologies-used)
-* [Setup](#setup)
+* [Providers](#providers)
+* [Prerequisites](#prerequisites)
 * [Usage](#usage)
 * [Screenshots](#screenshots)
 * [Project Status](#project-status)
@@ -25,12 +25,10 @@ This repo create ASG that scales up upto 3 replicas, based on the LB traffic. Th
 | Terraform | v1.1.7 |
 | Google Cloud SDK | 378.0.0 |
 
-
-## Setup
-What are the project requirements/dependencies? Where are they listed? A requirements.txt or a Pipfile.lock file perhaps? Where is it located?
-
-Proceed to describe how to install / setup one's local environment / get started with the project.
-
+## Prerequisites
+ Active account on Google Cloud Platform with: 
+* Active Billing Account enabled
+* Active Project Account
 
 ## Usage
 - The usage of the module could be like this
