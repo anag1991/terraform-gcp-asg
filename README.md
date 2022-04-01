@@ -192,7 +192,7 @@ Project is:  _complete_
 Give credit here.
 - This project was inspired by Farukkh Sadykov
 - This project was based on [this tutorial](https://www.youtube.com/watch?v=_o1d62KT-yo).
-- Many thanks to Ana Ghirghilijiu, Olivia Minoski, Jiyoung Chun, Tarik Allam, Tarik Sabir Idrissi, Akin Arslan
+- Many thanks to Ana Ghirghilijiu, Olivia Minoski, Jiyoung Chun, Tarik Allam, Tarik Sabir Idrissi, Akin Arslan, VCP team and ASG team.
 
 ## Contact
 Created by @arslakin!
